@@ -14,8 +14,9 @@ class CreateActividadesProtocolosTable extends Migration
     public function up()
     {
         Schema::create('actividades_protocolos', function (Blueprint $table) {
-            $table->integer('id_actividad')->primary();
-            $table->integer('id_protocolo')->primary();
+            $table->bigIncrements('id');
+            $table->integer('id_actividad');
+            $table->integer('id_protocolo');
 
             $table->foreign('id_actividad')->references('id')->on('actividades');
             $table->foreign('id_protocolo')->references('id')->on('protocolos');
