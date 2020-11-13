@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class Rol
+class Responsable
 {
     /**
      * Handle an incoming request.
@@ -15,10 +15,9 @@ class Rol
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->rol == "Jefe"){
+         if (auth()->check() && auth()->user()->rol == "Responsable"){
             return $next($request);
         }
         return redirect('/');
-
     }
 }

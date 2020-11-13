@@ -17,16 +17,16 @@ Route::get('/', function () {
 
 Route::get('create', function(){
 	return view('createProyect');
-});
+})->middleware('jefe');
 
 
 Route::get('viewProtocols', function(){
 	return view('viewProtocol');
-});
+})->middleware('responsable');
 
 Route::get('followProyects', function(){
 	return view('followProyect');
-});
+})->middleware('jefe');
 
 Auth::routes();
 

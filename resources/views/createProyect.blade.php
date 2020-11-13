@@ -11,7 +11,9 @@
                     
                 </div>
             </div>
+            <a href="{{ URL::previous() }}">Volver</a>
         </div>
+
     </div>
 </div>
 @endsection
