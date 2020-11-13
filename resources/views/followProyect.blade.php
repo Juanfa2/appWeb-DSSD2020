@@ -8,7 +8,26 @@
                 <div class="card-header"> Seguimientos de proyectos </div>
 
                 <div class="card-body">
-                    
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Fecha de inicio</th>
+                                <th>Fecha de fin</th>
+                                <th>Responsable</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($proyects as $proyect)
+                            <tr>
+                                <td>{{ $proyect->nombre }}</p>
+                                <td>{{ $proyect->fecha_inicio }}</p>
+                                <td>{{ $proyect->fecha_fin }}</p>
+                                <td>{{ (\App\User::where('id', $proyect->id_responsable)->pluck('name'))[0] }}</p>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <a href="{{ URL::previous() }}">Volver</a>

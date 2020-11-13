@@ -15,8 +15,20 @@
                         <a href="{{url('followProyects')}}" class="btn btn-success">Seguimiento de proyectos</a>
                     @endif
                     @if(Auth::user()->rol == "Responsable")
-                        <p>Resposable de protocolo</p>
-                        <a href="{{url('viewProtocols')}}" class="btn btn-success">Ver los protocolos</a>
+                        <p>Responsable de protocolo</p>
+
+
+                        {{ Form::open(array('url' => 'viewProtocols')) }}
+                        {{ Form::hidden('id', Auth::user()->id, ['class' => 'form-control' ]) }}
+                         <div class="form-group">
+                                <div>
+                                    {{ Form::submit('Ver los protocolos', ['class' => 'btn btn-success']) }}
+                                </div>
+                            </div>
+                        {{ Form::close() }}   
+
+
+                       
                     @endif
                 </div>
             </div>

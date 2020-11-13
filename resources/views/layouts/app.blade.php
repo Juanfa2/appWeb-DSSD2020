@@ -10,6 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
+
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
@@ -18,6 +19,23 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+     <script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous">
+    </script>
+    
+    <script>
+        $(function(){
+            $("#adicional").on('click', function(){
+                $("#tabla .fila-fija:eq(0)").clone().removeClass('fila-fija').appendTo("#tabla");
+            });
+            $(document).on("click",".eliminar", function(){
+                var parent = $(this).parents().get(0);
+                $(parent).remove();
+            });
+        });
+    </script>
 </head>
 <body>
     <div id="app">
@@ -76,5 +94,6 @@
             @yield('content')
         </main>
     </div>
+     
 </body>
 </html>

@@ -1,5 +1,8 @@
 <?php
 
+use App\User;
+use App\Proyect;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,18 +19,23 @@ Route::get('/', function () {
 });
 
 Route::get('create', function(){
-	return view('createProyect');
+    $responsables = User::where('rol', 'Responsable')->pluck('name', 'id');
+	return view('createProyect', ['responsables' => $responsables]);
 })->middleware('jefe');
 
 
-Route::get('viewProtocols', function(){
-	return view('viewProtocol');
-})->middleware('responsable');
+Route::post('viewProtocols', 'ProtocolController@show')->middleware('responsable');
+
+
 
 Route::get('followProyects', function(){
-	return view('followProyect');
+   	$proyects = Proyect::all();
+	return view('followProyect',  ['proyects' => $proyects]);
 })->middleware('jefe');
+
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::post('/proyect/store', 'ProyectController@store')->name('proyect.store')->middleware('jefe');
