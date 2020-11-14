@@ -5,16 +5,16 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header"> Formulario para crear Protocolo</div>
-
+                <div class="card-header">Formulario para crear proyecto</div>
                 <div class="card-body">
+                    <h3 class="h3-create-proyect">Datos del proyecto</h3>
                     {{ Form::open(array('url' => 'proyect/store')) }}
                         <fieldset>
                             <!-- Nombre -->
                             <div class="form-group row">
-                                {{ Form::Label('nombrep', 'Nombre del proyecto:', ['class' => 'col-lg-4 col-form-label']) }}
+                                {{ Form::Label('nombre_proyecto', 'Nombre del proyecto:', ['class' => 'col-lg-4 col-form-label']) }}
                                 <div class="col-lg-8">
-                                    {{ Form::text('nombrep', null, ['class' => 'form-control']) }}
+                                    {{ Form::text('nombre_proyecto', null, ['class' => 'form-control']) }}
                                 </div>
                             </div>
 
@@ -34,60 +34,50 @@
                                 </div>
                             </div>
 
-                            <!--Protocolos del proyecto -->
                             <hr/>
+
+                            <!--Protocolos del proyecto -->
                             <h3>Protocolos</h3>
                             <div class="form-group">
-                                <div class="col-lg-10 col-lg-offset-2">
-                                    <button id="adicional" name="adicional" type="button" class="btn btn-warning"> Añadir protocolo</button>
-                                </div>
+                                <button id="adicional" name="adicional" type="button" class="btn btn-info">Añadir protocolo</button>
                             </div>
-                            <!--
-                             <table class="form-group table" id="tabla">
-                             <tr class="fila-fija">
-                                 <td> <label class="col-lg-4 col-form-label" for="">Responsable</label><input  class="form-control" required name="responsable[]"></td>
-                                 <td> <label class="col-lg-4 col-form-label" for="">Nombre</label><input  class="form-control" required name="nombre[]"></td>
-
-                                 <td class="eliminar"> <input type="button" value="Menos -"></td>
-
-                             </tr>
-                            </table>
-                        -->
 
                             <div class="form-group row" id="tabla">
                                 <div class="fila-fija">
-
-                                    {{ Form::Label('nombre', 'Nombre del protocolo:', ['class' => 'col-lg-10 col-form-label']) }}
-                                     <div class="col-lg-12">
-                                        {{ Form::text('nombre', null, ['class' => 'form-control', 'name' => 'nombre[]']) }}
+                                    <div class="form-group">
+                                        {{ Form::Label('nombre', 'Nombre del protocolo:', ['class' => 'col-lg-10 col-form-label']) }}
+                                        <div class="col-lg-10">
+                                            {{ Form::text('nombre', null, ['class' => 'form-control', 'name' => 'nombre[]']) }}
+                                        </div>
                                     </div>
 
-                                     {{ Form::Label('id_responsable', 'Responsable:', ['class' => 'col-lg-10 col-form-label']) }}
-                                    <div class="col-lg-12">
-                                        {{ Form::select('id_responsable', $responsables, null, ['class' => 'form-control', 'name' => 'responsable[]']) }}
+                                    <div class="form-group">
+                                        {{ Form::Label('id_responsable', 'Responsable:', ['class' => 'col-lg-10 col-form-label']) }}
+                                        <div class="col-lg-10">
+                                            {{ Form::select('id_responsable', $responsables, null, ['class' => 'form-control', 'name' => 'responsable[]']) }}
+                                        </div>
                                     </div>
-
                                     
-                                     {{ Form::Label('local', 'Es local ?:', ['class' => 'col-lg-10 col-form-label']) }}
-                                     <div class="col-lg-12">
-                                        {{ Form::text('local', null, ['class' => 'form-control', 'name' => 'local[]']) }}
+                                    <div class="form-group">
+                                        {{ Form::Label('local', 'Ejecución:', ['class' => 'col-lg-10 col-form-label']) }}
+                                        <div class="col-lg-10">
+                                        {{ Form::select('id_responsable', ['0' => 'Local', '1' => 'Remota'], null, ['class' => 'form-control', 'name' => 'ejecucion[]']) }}
+                                        </div>
                                     </div>
 
-                                    {{ Form::Label('orden', 'Orden', ['class' => 'col-lg-10 col-form-label']) }}
-                                     <div class="col-lg-12">
-                                        {{ Form::text('orden', null, ['class' => 'form-control', 'name' => 'orden[]']) }}
+                                    <div class="form-group">
+                                        {{ Form::Label('orden', 'Orden', ['class' => 'col-lg-10 col-form-label']) }}
+                                        <div class="col-lg-6">
+                                            {{ Form::number('orden', null, ['class' => 'form-control', 'name' => 'orden[]']) }}
+                                        </div>
                                     </div>
-
-
 
                                     <div class="form-group eliminar">
                                         <div class="col-lg-10 col-lg-offset-2">
-                                            <input class="btn btn-danger mt-2" type="button" value="Menos -">
-                                        </div> 
-                                        
+                                            <input class="btn btn-danger mt-2" type="button" value="Eliminar protocolo">
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
                             <hr/>
                             
@@ -96,10 +86,9 @@
                             <!-- Submit Button -->
                             <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
-                                    {{ Form::submit('Guardar', ['class' => 'btn btn-lg pull-right']) }}
+                                    {{ Form::submit('Guardar', ['class' => 'btn btn-lg btn-success pull-right']) }}
                                 </div>
                             </div>
-
                         </fieldset>
                     {{ Form::close() }}
                 </div>

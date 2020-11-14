@@ -2,6 +2,7 @@
 
 use App\User;
 use App\Proyect;
+use App\Protocol;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,16 +24,15 @@ Route::get('create', function(){
 	return view('createProyect', ['responsables' => $responsables]);
 })->middleware('jefe');
 
-
-Route::post('viewProtocols', 'ProtocolController@show')->middleware('responsable');
-
-
+Route::get('viewProtocols', function(){
+    $protocols = Protocol::Where('id_responsable', Auth::user()->id)->get();
+    return view('viewProtocols',  ['protocols' => $protocols]);
+})->middleware('responsable');
 
 Route::get('followProyects', function(){
    	$proyects = Proyect::all();
 	return view('followProyect',  ['proyects' => $proyects]);
 })->middleware('jefe');
-
 
 Auth::routes();
 

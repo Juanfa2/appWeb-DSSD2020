@@ -28,30 +28,24 @@ class ProyectController extends Controller
 
     protected function store()
     {   $request = Input::all();
-        //dd($request);
-
-
-        $idP = Proyect::create([
-            'nombre' => Input::get('nombrep'),
+        Proyect::create([
+            'nombre' => Input::get('nombre_proyecto'),
             'fecha_inicio' => Input::get('fecha_inicio'),
             'fecha_fin' => Input::get('fecha_fin'),
             'id_responsable' => Input::get('idCreator'),
         ]);
 
-        $id = Proyect::where('nombre', Input::get('nombrep'))->pluck('id_proyecto');
+        $id = Proyect::where('nombre', Input::get('nombre_proyecto'))->first();
         
-
         $cant = count($request["responsable"]);
         
-
         for ($i=0; $i < $cant ; $i++) { 
             Protocol::create([
                 'nombre' => $request["nombre"][$i],
-                
-                'id_responsable' =>$request["responsable"][$i] ,
+                'id_responsable' =>$request["responsable"][$i],
                 'orden' => $request["orden"][$i],
-                'es_local'=> ($request["local"][$i] == '0') ? 0 : 1,
-                'id_proyecto' => (string)$idP["id"] , 
+                'es_local'=> ($request["ejecucion"][$i] == 0) ? 0 : 1,
+                'id_proyecto' => $id->id, 
             ]);
         }
 

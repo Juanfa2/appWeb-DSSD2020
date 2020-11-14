@@ -6,7 +6,6 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header"> Seguimientos de proyectos </div>
-
                 <div class="card-body">
                     <table class="table table-sm">
                         <thead>

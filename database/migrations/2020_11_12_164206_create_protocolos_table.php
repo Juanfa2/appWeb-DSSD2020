@@ -20,8 +20,8 @@ class CreateProtocolosTable extends Migration
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
             $table->integer('orden');
-            $table->boolean('es_local')->default(false);
-            $table->integer('puntaje');
+            $table->boolean('es_local');
+            $table->integer('puntaje')->nullable();
             $table->unsignedBigInteger('id_proyecto');
             $table->timestamp('fecha_lanzamiento')->nullable();
             $table->timestamp('fecha_terminacion')->nullable();
