@@ -19,10 +19,10 @@
                         <tbody>
                             @foreach ($proyects as $proyect)
                             <tr>
-                                <td>{{ $proyect->nombre }}</p>
-                                <td>{{ $proyect->fecha_inicio }}</p>
-                                <td>{{ $proyect->fecha_fin }}</p>
-                                <td>{{ (\App\User::where('id', $proyect->id_responsable)->pluck('name'))[0] }}</p>
+                                <td>{{ $proyect->nombre }}</td>
+                                <td>{{ $proyect->fecha_inicio }}</td>
+                                <td>{{ $proyect->fecha_fin }}</td>
+                                <td>{{ (\App\User::where('id', $proyect->id_responsable)->pluck('name'))[0] }}</td>
                             </tr>
                             @endforeach
                         </tbody>
