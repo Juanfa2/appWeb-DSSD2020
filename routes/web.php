@@ -35,7 +35,7 @@ Route::get('followProyects', function(){
 })->middleware('jefe');
 
 Route::get('errorsNotice', function(){
-   	$protocols = Protocol::whereNotNull('exec_error');
+   	$protocols = Protocol::all();#whereNotNull('exec_error');
 	return view('errorsNotice',  ['protocols' => $protocols]);
 })->middleware('jefe');
 

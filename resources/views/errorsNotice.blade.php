@@ -3,12 +3,7 @@
 @section('content')
    <div class="container">
     <div class="row justify-content-center">       
-        @if($protocols)
-            <div class="col-md-6">
-                <h3>No hay protocolos que requieran su atención</h3>
-                <a href="{{ URL::previous() }}" class="btn btn-info" >Volver</a>
-            </div>
-        @else
+        @if( count($protocols) > 0 )
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header"> Notificaciones de errores </div>
@@ -41,6 +36,11 @@
                         </table>
                     </div>
                 </div>
+                <a href="{{ URL::previous() }}" class="btn btn-info" >Volver</a>
+            </div>
+        @else
+            <div class="col-md-6">
+                <h3>No hay protocolos que requieran su atención</h3>
                 <a href="{{ URL::previous() }}" class="btn btn-info" >Volver</a>
             </div>
         @endif
