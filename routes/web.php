@@ -34,6 +34,11 @@ Route::get('followProyects', function(){
 	return view('followProyect',  ['proyects' => $proyects]);
 })->middleware('jefe');
 
+Route::get('errorsNotice', function(){
+   	$protocols = Protocol::whereNotNull('exec_error');
+	return view('errorsNotice',  ['protocols' => $protocols]);
+})->middleware('jefe');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
