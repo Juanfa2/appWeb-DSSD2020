@@ -3,7 +3,7 @@
 @section('content')
    <div class="container">
     <div class="row justify-content-center">       
-        @if( count($protocols) > 0 )
+        @if( $protocols->count() > 0 )
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header"> Notificaciones de errores </div>

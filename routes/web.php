@@ -15,9 +15,13 @@ use App\Protocol;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//con esta ruta el logout siempre te lleva al loguin evitando el cartel de laravel,
+//si deciden que lleve a ese cartel, que para mi no corresponde, usen el get de abajo.
+Route::get('/','HomeController@index')->name('home');
+
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Route::get('create', function(){
     $responsables = User::where('rol', 'Responsable')->pluck('name', 'id');
@@ -35,7 +39,7 @@ Route::get('followProyects', function(){
 })->middleware('jefe');
 
 Route::get('errorsNotice', function(){
-   	$protocols = Protocol::whereNotNull('exec_error');
+   	$protocols = Protocol::all();#whereNotNull('exec_error');
 	return view('errorsNotice',  ['protocols' => $protocols]);
 })->middleware('jefe');
 
@@ -44,4 +48,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/proyect/store', 'ProyectController@store')->name('proyect.store')->middleware('jefe');
-Route::get('/protocol/exec', 'ProtocolController@exec_protocol')->name('protocol.exec_protocol')->middleware('responsable');
+Route::get('/protocol/exec/{id}', 'ProtocolController@exec_protocol')->name('protocol.exec_protocol')->middleware('responsable');

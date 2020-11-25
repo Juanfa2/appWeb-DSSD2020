@@ -93,7 +93,7 @@
                     {{ Form::close() }}
                 </div>
             </div>
-            <a href="{{ URL::previous() }}">Volver</a>
+            <a href="{{ URL::previous() }}" class="btn btn-info">Volver</a>
         </div>
 
     </div>
