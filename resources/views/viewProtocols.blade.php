@@ -24,7 +24,7 @@
                                 <td>{{ $protocol->nombre }}</td>
                                 <td>{{ $protocol->orden }}</td>
                                 <td>@if ($protocol->es_local == 0) Local @else Remoto @endif</td>
-                                <td>{{ (\App\Proyect::where('id', $protocol->id_proyecto)->pluck('nombre'))[0] }}</td>
+                                <td>{{ (\App\Proyect::where('id_proyecto', $protocol->id_proyecto)->pluck('nombre'))[0] }}</td>
                                 <td>Sin ejecutar</td>
                                 <td>
                                     <a class="btn btn-success" href="google.com">Ejecutar
