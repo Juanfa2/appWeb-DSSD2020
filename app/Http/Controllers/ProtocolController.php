@@ -13,4 +13,8 @@ class ProtocolController extends Controller
     	$protocolos = Protocol::where('id_responsable',$request["id"])->get();
     	return view('viewProtocol',['protocols' => $protocolos] );
     }	
+
+    public function exec_protocol(){
+    	return "holi";
+    }
 }
