@@ -3,6 +3,7 @@
 use App\User;
 use App\Proyect;
 use App\Protocol;
+use App\HTTP\Controllers\ProtocolController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,9 +30,10 @@ Route::get('create', function(){
 })->middleware('jefe');
 
 Route::get('viewProtocols', function(){
-    $protocols = Protocol::Where('id_responsable', Auth::user()->id)->get();
+    //$protocols = Protocol::Where('id_responsable', Auth::user()->id)->get();
+    $protocols = ProtocolController::getProtocols();
     return view('viewProtocols',  ['protocols' => $protocols]);
-})->middleware('responsable');
+})->name('viewProtocols')->middleware('responsable');
 
 Route::get('followProyects', function(){
    	$proyects = Proyect::all();

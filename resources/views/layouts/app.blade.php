@@ -36,6 +36,11 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#top').find('a').trigger('click');
+        });
+    </script>
 </head>
 <body>
     <div id="app">

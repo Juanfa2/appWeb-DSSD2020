@@ -26,7 +26,7 @@ class ProyectController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    protected function store()
+    public function store()
     {   $request = Input::all();
         Proyect::create([
             'nombre' => Input::get('nombre_proyecto'),
