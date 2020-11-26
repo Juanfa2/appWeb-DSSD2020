@@ -28,7 +28,8 @@
                                         {{ $protocol['exec_error'] }}
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-danger">¡Cancelar!</button>
+                                        <a class="btn btn-danger" href="{{url('/protocol/delete/'.$protocol['id_protocolo'])}}">¡Cancelar!
+                                        </a>                                        
                                         <a class="btn btn-primary" href="{{url('/protocol/re-exec/'.$protocol['id_protocolo'])}}">Re-ejecutar
                                         </a>
                                         <button type="button" class="btn btn-success">Continuar</button>

@@ -41,9 +41,9 @@ Route::get('followProyects', function(){
 })->middleware('jefe');
 
 Route::get('errorsNotice', function(){
-   	$protocols = ProtocolController::getProtocols();#all();#whereNotNull('exec_error');
+   	$protocols = ProtocolController::getProtocols();
 	return view('errorsNotice',  ['protocols' => $protocols]);
-})->middleware('jefe');
+})->name('errorsNotice')->middleware('jefe');
 
 Auth::routes();
 
@@ -53,4 +53,6 @@ Route::post('/proyect/store', 'ProyectController@store')->name('proyect.store')-
 Route::get('/protocol/exec/{id}', 'ProtocolController@exec_protocol')->name('protocol.exec_protocol')->middleware('responsable');
 
 Route::get('/protocol/re-exec/{id}', 'ProtocolController@re_exec_protocol')->name('protocol.re_exec_protocol')->middleware('jefe');
+
+Route::get('/protocol/delete/{id}', 'ProtocolController@delete_protocol')->name('protocol.delete_protocol')->middleware('jefe');
 
