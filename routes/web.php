@@ -41,7 +41,7 @@ Route::get('followProyects', function(){
 })->middleware('jefe');
 
 Route::get('errorsNotice', function(){
-   	$protocols = Protocol::all();#whereNotNull('exec_error');
+   	$protocols = ProtocolController::getProtocols();#all();#whereNotNull('exec_error');
 	return view('errorsNotice',  ['protocols' => $protocols]);
 })->middleware('jefe');
 
@@ -51,3 +51,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/proyect/store', 'ProyectController@store')->name('proyect.store')->middleware('jefe');
 Route::get('/protocol/exec/{id}', 'ProtocolController@exec_protocol')->name('protocol.exec_protocol')->middleware('responsable');
+
+Route::get('/protocol/re-exec/{id}', 'ProtocolController@re_exec_protocol')->name('protocol.re_exec_protocol')->middleware('jefe');
+
