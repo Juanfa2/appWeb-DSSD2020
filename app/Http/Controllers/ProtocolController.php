@@ -40,9 +40,8 @@ class ProtocolController extends Controller
     }
 
     public function re_exec_protocol($id){
-    	//protocolo a priori igual que exec protocol, pero hago uno nuevo por cualquier diferencia que peuda surgir.
     	
-    	$endpoint = "http://127.0.0.1:8001/api/services/run/".$id;
+    	$endpoint = "http://127.0.0.1:8001/api/services/refresh/".$id;
         $client = new \GuzzleHttp\Client();
 
 		$response = $client->request('get', $endpoint);
