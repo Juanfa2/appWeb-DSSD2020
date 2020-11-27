@@ -65,8 +65,8 @@ class ProtocolController extends Controller
 		return redirect()->route('errorsNotice');
     }
 
-    public function getDisapproved(){
-    	$endpoint = "http://127.0.0.1:8001/api/services/disapproved/";
+    public function getProtocolsDisapproved(){
+    	$endpoint = "http://127.0.0.1:8001/api/services/protocol/all";
         $client = new \GuzzleHttp\Client();
 
 		$response = $client->request('GET', $endpoint);
