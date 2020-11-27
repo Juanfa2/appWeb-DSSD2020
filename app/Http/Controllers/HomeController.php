@@ -38,7 +38,8 @@ class HomeController extends Controller
     public function recibir(Request $request){
         #Busco el id del proceso a traves del nombre. 
         $client = GuzzleController::getGuzzleClient();
-        $request = $client->request('GET', 'API/bpm/case?name=configuracion',
+        
+        $request = $client->request('GET', 'API/bpm/process?f=displayName=configuracion',
             [
                 'headers' => [
                     'X-Bonita-API-Token' => GuzzleController::getToken()
@@ -51,9 +52,9 @@ class HomeController extends Controller
         $response['success'] = true;
         $response['data'] = json_decode($tareas);
        
-        dd($response);
-        $id=$response['data'][0]->processDefinitionId; #Obtengo id del proceso
         //dd($response);
+        $id=$response['data'][0]->id; #Obtengo id del proceso
+        //dd($id);
         
 
         #Creo una instancia del proceso
@@ -70,7 +71,7 @@ class HomeController extends Controller
         $response['data'] = json_decode($tareas);
         $caseId = $response['data']->caseId; #Obtengo id de la instancia
         
-
+        //dd($response);
 #######################################################################################################################
         #Seteo la variable del proceso de la instancia ($caseId)
         #Se tiene que hacer 1 vez por cada variable a setear
@@ -138,7 +139,7 @@ class HomeController extends Controller
                 ],   
                 'json' => [
                             "assigned_id" => $idUser,
-                            'state'=> 'skipped'
+                            
                 ]   
         ]);
 
@@ -148,11 +149,9 @@ class HomeController extends Controller
         $response['success'] = true;
         $response['data'] = json_decode($tareas);
        
-        dd($response);
+   
 
-
-        ##Ejecutar la actividad, y le dejo un comentario.
-        #NO FUNCIONA POR AHORA
+        ##Ejecutar la actividad, queda como ejecutada y se guarda en case archivados
 
          $request = $client->request('POST', '/bonita/API/bpm/userTask/'.$idTask.'/execution',
             [
@@ -170,7 +169,7 @@ class HomeController extends Controller
         $response['success'] = true;
         $response['data'] = json_decode($tareas);
 
-         dd($response);
+        dd($response);
 
 
         
