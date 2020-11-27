@@ -51,4 +51,6 @@ class ProyectController extends Controller
 
         return redirect()->route('home');
     }
+
+    
 }

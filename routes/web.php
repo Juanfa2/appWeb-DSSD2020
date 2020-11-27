@@ -19,6 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/prueba', 'HomeController@enviar');
+Route::get('/recibir', 'HomeController@recibir');
+
 Route::get('create', function(){
     $responsables = User::where('rol', 'Responsable')->pluck('name', 'id');
 	return view('createProyect', ['responsables' => $responsables]);
