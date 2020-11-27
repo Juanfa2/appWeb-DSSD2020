@@ -25,10 +25,8 @@ class CreateProtocolosTable extends Migration
             $table->unsignedBigInteger('id_proyecto');
             $table->timestamp('fecha_lanzamiento')->nullable();
             $table->timestamp('fecha_terminacion')->nullable();
-
             $table->foreign('id_responsable')->references('id')->on('users');
             $table->foreign('id_proyecto')->references('id')->on('proyectos');
-            
         });
     }
 

@@ -3,6 +3,7 @@
 use App\User;
 use App\Proyect;
 use App\Protocol;
+use App\HTTP\Controllers\ProtocolController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +16,13 @@ use App\Protocol;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//con esta ruta el logout siempre te lleva al loguin evitando el cartel de laravel,
+//si deciden que lleve a ese cartel, que para mi no corresponde, usen el get de abajo.
+Route::get('/','HomeController@index')->name('home');
+
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Route::get('/prueba', 'HomeController@enviar');
 Route::get('/recibir', 'HomeController@recibir');
@@ -28,9 +33,9 @@ Route::get('create', function(){
 })->middleware('jefe');
 
 Route::get('viewProtocols', function(){
-    $protocols = Protocol::Where('id_responsable', Auth::user()->id)->get();
+    $protocols = ProtocolController::getProtocols();
     return view('viewProtocols',  ['protocols' => $protocols]);
-})->middleware('responsable');
+})->name('viewProtocols')->middleware('responsable');
 
 Route::get('followProyects', function(){
    	$proyects = Proyect::all();
@@ -38,13 +43,19 @@ Route::get('followProyects', function(){
 })->middleware('jefe');
 
 Route::get('errorsNotice', function(){
-   	$protocols = Protocol::whereNotNull('exec_error');
+   	$protocols = ProtocolController::getDisapproved();
 	return view('errorsNotice',  ['protocols' => $protocols]);
-})->middleware('jefe');
+})->name('errorsNotice')->middleware('jefe');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/proyect/store', 'ProyectController@store')->name('proyect.store')->middleware('jefe');
-Route::get('/protocol/exec', 'ProtocolController@exec_protocol')->name('protocol.exec_protocol')->middleware('responsable');
+Route::get('/protocol/exec/{id}', 'ProtocolController@exec_protocol')->name('protocol.exec_protocol')->middleware('responsable');
+
+Route::get('/protocol/re-exec/{id}', 'ProtocolController@re_exec_protocol')->name('protocol.re_exec_protocol')->middleware('jefe');
+
+Route::get('/protocol/delete/{id}', 'ProtocolController@delete_protocol')->name('protocol.delete_protocol')->middleware('jefe');
+
+Route::get('/protocol/continue/{id}', 'ProtocolController@continue_exec_protocol')->name('protocol.continue_exec_protocol')->middleware('jefe');

@@ -26,7 +26,7 @@ class ProyectController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    protected function store()
+    public function store()
     {   $request = Input::all();
         Proyect::create([
             'nombre' => Input::get('nombre_proyecto'),
@@ -38,14 +38,19 @@ class ProyectController extends Controller
         $id = Proyect::where('nombre', Input::get('nombre_proyecto'))->first();
         
         $cant = count($request["responsable"]);
+
+        $endpoint = "http://127.0.0.1:8001/api/services/protocol/add";
+        $client = new \GuzzleHttp\Client();
         
         for ($i=0; $i < $cant ; $i++) { 
-            Protocol::create([
-                'nombre' => $request["nombre"][$i],
-                'id_responsable' =>$request["responsable"][$i],
-                'orden' => $request["orden"][$i],
-                'es_local'=> ($request["ejecucion"][$i] == 0) ? 0 : 1,
-                'id_proyecto' => $id->id, 
+            $response = $client->request('POST', $endpoint, [
+                'form_params' => [
+                    'nombre' => $request["nombre"][$i],
+                    'id_responsable' => $request["responsable"][$i],
+                    'orden' => $request["orden"][$i],
+                    'es_local'=> $request["ejecucion"][$i],
+                    'id_proyecto' => $id->id, 
+                ]
             ]);
         }
 
