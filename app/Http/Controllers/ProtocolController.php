@@ -17,11 +17,7 @@ class ProtocolController extends Controller
         $content = $response->getBody();
 
         return json_decode($content, true);
-
-    	/*$request = Input::all();
-    	$protocolos = Protocol::where('id_responsable',$request["id"])->get();
-    	return view('viewProtocol',['protocols' => $protocolos] );*/
-    }	
+    }
 
     public function exec_protocol($id){
         $endpoint = "http://127.0.0.1:8001/api/services/run/".$id;
@@ -32,11 +28,6 @@ class ProtocolController extends Controller
         $content = json_decode($response->getBody(), true);
 
         return redirect()->route('viewProtocols', ['info' => $content['Info'], 'estado' => $content['Estado']]);
-        
-
-		// or when your server returns json
-		/*$content = json_decode($response->getBody(), true);
-    	return view('viewProtocol',['protocols' => $protocolos] );*/
     }
 
     public function re_exec_protocol($id){
@@ -44,7 +35,7 @@ class ProtocolController extends Controller
     	$endpoint = "http://127.0.0.1:8001/api/services/refresh/".$id;
         $client = new \GuzzleHttp\Client();
 
-		$response = $client->request('get', $endpoint);
+		$response = $client->request('GET', $endpoint);
 
        	return redirect()->route('errorsNotice');
     }
