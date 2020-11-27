@@ -32,7 +32,7 @@ class ProtocolController extends Controller
 
     public function re_exec_protocol($id){
     	
-    	$endpoint = "http://127.0.0.1:8001/api/services/refresh/".$id;
+    	$endpoint = "http://127.0.0.1:8001/api/services/protocol/refresh/".$id;
         $client = new \GuzzleHttp\Client();
 
 		$response = $client->request('GET', $endpoint);
@@ -41,7 +41,7 @@ class ProtocolController extends Controller
     }
 
     public function delete_protocol($id){
-    	$endpoint = "http://127.0.0.1:8001/api/services/delete/".$id;
+    	$endpoint = "http://127.0.0.1:8001/api/services/protocol/delete/".$id;
     	$client = new \GuzzleHttp\Client();
 
 		$response = $client->request('GET', $endpoint);
@@ -49,7 +49,7 @@ class ProtocolController extends Controller
     }
 
     public function continue_exec_protocol($id){
-    	$endpoint = "http://127.0.0.1:8001/api/services/continue/".$id;
+    	$endpoint = "http://127.0.0.1:8001/api/services/protocol/continue/".$id;
     	$client = new \GuzzleHttp\Client();
 
 		$response = $client->request('GET', $endpoint);
@@ -57,7 +57,7 @@ class ProtocolController extends Controller
     }
 
     public function getDisapproved(){
-    	$endpoint = "http://127.0.0.1:8001/api/services/disapproved/";
+    	$endpoint = "http://127.0.0.1:8001/api/services/protocol/disapproved";
         $client = new \GuzzleHttp\Client();
 
 		$response = $client->request('GET', $endpoint);
