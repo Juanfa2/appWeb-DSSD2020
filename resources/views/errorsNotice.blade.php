@@ -32,7 +32,8 @@
                                         </a>                                        
                                         <a class="btn btn-primary" href="{{url('/protocol/re-exec/'.$protocol['id_protocolo'])}}">Re-ejecutar
                                         </a>
-                                        <button type="button" class="btn btn-success">Continuar</button>
+                                        <a class="btn btn-success" href="{{url('/protocol/continue/'.$protocol['id_protocolo'])}}">Continuar
+                                        </a>
                                     </td>
                                 </tr>
                                 @endforeach

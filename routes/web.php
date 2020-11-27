@@ -30,7 +30,6 @@ Route::get('create', function(){
 })->middleware('jefe');
 
 Route::get('viewProtocols', function(){
-    //$protocols = Protocol::Where('id_responsable', Auth::user()->id)->get();
     $protocols = ProtocolController::getProtocols();
     return view('viewProtocols',  ['protocols' => $protocols]);
 })->name('viewProtocols')->middleware('responsable');
@@ -42,6 +41,8 @@ Route::get('followProyects', function(){
 
 Route::get('errorsNotice', function(){
    	$protocols = ProtocolController::getProtocols();
+   	#reemplazar cuando este el getDesaprobados por:
+   	#$protocols = ProtocolController::getDisapproved();
 	return view('errorsNotice',  ['protocols' => $protocols]);
 })->name('errorsNotice')->middleware('jefe');
 
@@ -56,3 +57,4 @@ Route::get('/protocol/re-exec/{id}', 'ProtocolController@re_exec_protocol')->nam
 
 Route::get('/protocol/delete/{id}', 'ProtocolController@delete_protocol')->name('protocol.delete_protocol')->middleware('jefe');
 
+Route::get('/protocol/continue/{id}', 'ProtocolController@continue_exec_protocol')->name('protocol.continue_exec_protocol')->middleware('jefe');
