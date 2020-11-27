@@ -40,9 +40,7 @@ Route::get('followProyects', function(){
 })->middleware('jefe');
 
 Route::get('errorsNotice', function(){
-   	$protocols = ProtocolController::getProtocols();
-   	#reemplazar cuando este el getDesaprobados por:
-   	#$protocols = ProtocolController::getDisapproved();
+   	$protocols = ProtocolController::getDisapproved();
 	return view('errorsNotice',  ['protocols' => $protocols]);
 })->name('errorsNotice')->middleware('jefe');
 

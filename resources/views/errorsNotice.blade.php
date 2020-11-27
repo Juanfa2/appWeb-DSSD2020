@@ -25,7 +25,7 @@
                                         {{ (\App\User::where('id', $protocol['id_responsable'])->pluck('name'))[0] }}
                                     </td>
                                     <td>
-                                        {{ $protocol['exec_error'] }}
+                                        <P>Comunicarse con el responsable<p>
                                     </td>
                                     <td>
                                         <a class="btn btn-danger" href="{{url('/protocol/delete/'.$protocol['id_protocolo'])}}">¡Cancelar!

@@ -57,7 +57,7 @@ class ProtocolController extends Controller
     }
 
 
-    public function getDisapproved(){
+    public static function getDisapproved(){
     	$endpoint = "http://127.0.0.1:8001/api/services/protocol/disapproved";
         $client = new \GuzzleHttp\Client();
 
