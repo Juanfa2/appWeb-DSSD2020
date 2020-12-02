@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     @endif
-                    <div class="card-header">Protocolos asignados</div>
+                    <div class="card-header"style="background-color: #5cb85c;" >Protocolos asignados</div>
                     <div class="card-body">
                         <table class="table table-sm">
                             <thead>

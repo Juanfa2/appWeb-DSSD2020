@@ -6,7 +6,7 @@
         @if( count($protocols) > 0 )
             <div class="col-md-10">
                 <div class="card">
-                    <div class="card-header"> Notificaciones de errores </div>
+                    <div class="card-header" style="background-color: #d9534f;"> Notificaciones de errores </div>
                     <div class="card-body">
                         <table class="table table-sm">
                             <thead>
@@ -25,7 +25,11 @@
                                         {{ (\App\User::where('id', $protocol['id_responsable'])->pluck('name'))[0] }}
                                     </td>
                                     <td>
-                                        <P>Comunicarse con el responsable<p>
+                                        @if($protocol['exec_error'])
+                                            <P>{{ $protocol['exec_error'] }}<p>
+                                        @else
+                                            <P>"Comunicarse con el responsable"<p>
+                                        @endif
                                     </td>
                                     <td>
                                         <a class="btn btn-danger" href="{{url('/protocol/delete/'.$protocol['id_protocolo'])}}">¡Cancelar!

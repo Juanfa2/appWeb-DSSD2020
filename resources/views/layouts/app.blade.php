@@ -42,6 +42,22 @@
         });
     </script>
 </head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border: 1px solid black;
+}
+
+td, th {
+  border: 1px solid #000000;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #bababa;
+}
+</style>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-info shadow-sm">

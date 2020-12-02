@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Formulario para crear proyecto</div>
+                <div class="card-header" style="background-color: #5bc0de;">Formulario para crear proyecto</div>
                 <div class="card-body">
                     <h3 class="h3-create-proyect">Datos del proyecto</h3>
                     {{ Form::open(array('url' => 'proyect/store')) }}

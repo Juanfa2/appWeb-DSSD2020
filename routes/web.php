@@ -38,7 +38,7 @@ Route::get('viewProtocols', function(){
 })->name('viewProtocols')->middleware('responsable');
 
 Route::get('followProyects', function(){
-   	$proyects = Proyect::all();
+   	$proyects = ProtocolController::getProtocols();
 	return view('followProyect',  ['proyects' => $proyects]);
 })->middleware('jefe');
 

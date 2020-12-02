@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header"> Seguimientos de proyectos </div>
+                <div class="card-header" style="background-color: #5cb85c;"> Seguimientos de proyectos </div>
                 <div class="card-body">
                     <table class="table table-sm">
                         <thead>
@@ -19,10 +19,10 @@
                         <tbody>
                             @foreach ($proyects as $proyect)
                             <tr>
-                                <td>{{ $proyect->nombre }}</td>
-                                <td>{{ $proyect->fecha_inicio }}</td>
-                                <td>{{ $proyect->fecha_fin }}</td>
-                                <td>{{ (\App\User::where('id', $proyect->id_responsable)->pluck('name'))[0] }}</td>
+                                <td>{{ $proyect['nombre'] }}</td>
+                                <td>{{ $proyect['fecha_inicio'] }}</td>
+                                <td>{{ $proyect['fecha_fin'] }}</td>
+                                <td>{{ (\App\User::where('id', $proyect['id_responsable'])->pluck('name'))[0] }}</td>
                             </tr>
                             @endforeach
                         </tbody>
