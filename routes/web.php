@@ -59,3 +59,5 @@ Route::get('/protocol/re-exec/{id}', 'ProtocolController@re_exec_protocol')->nam
 Route::get('/protocol/delete/{id}', 'ProtocolController@delete_protocol')->name('protocol.delete_protocol')->middleware('jefe');
 
 Route::get('/protocol/continue/{id}', 'ProtocolController@continue_exec_protocol')->name('protocol.continue_exec_protocol')->middleware('jefe');
+
+Route::get('/protocol/informe/{id}' ,'ProtocolController@informe');

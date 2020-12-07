@@ -15,11 +15,28 @@ class ProtocolController extends Controller
 
 		$response = $client->request('GET', $endpoint);
         $content = $response->getBody();
-
+        
         return json_decode($content, true);
     }
 
     public function exec_protocol($id){
+        
+        #Busco el proceso por el nombre
+        $responseBonita = RequestBonitaController::getActivityByName("Ejecutar protocolo");
+        $idTask= $responseBonita['data'][0]->id;
+
+
+        #Busco el usuario por lastname, "en este caso viene predefinido con bates", y me quedo con el id
+        $response = RequestBonitaController::getIdUserByLastname();
+        $idUser = $response['data'][0]->id;
+
+        #A la actividad le asigno un usuario. 
+        RequestBonitaController::assignActivityToUser($idTask, $idUser);
+
+        #Ejecuto la actividad, queda guardad en tareas realizadas
+        RequestBonitaController::executeActivity($idTask);
+
+        
         $endpoint = "http://127.0.0.1:8001/api/services/run/".$id;
         $client = new \GuzzleHttp\Client();
 
@@ -65,5 +82,29 @@ class ProtocolController extends Controller
         $content = $response->getBody();
 
         return json_decode($content, true);
+    }
+
+    public static function informe(){
+        #Busco el proceso por el nombre
+        $responseBonita = RequestBonitaController::getActivityByName("Enviar Informe");
+        $idTask= $responseBonita['data'][0]->id;
+        $idCase= $responseBonita['data'][0]->caseId;
+
+        $variable = "cant_protocolo";
+        $data = 0 ; 
+        $Response = RequestBonitaController::setCaseVariable($idCase, $variable, $data);
+
+
+        #Busco el usuario por lastname, "en este caso viene predefinido con bates", y me quedo con el id
+        $response = RequestBonitaController::getIdUserByLastname();
+        $idUser = $response['data'][0]->id;
+
+        #A la actividad le asigno un usuario. 
+        RequestBonitaController::assignActivityToUser($idTask, $idUser);
+
+        #Ejecuto la actividad, queda guardad en tareas realizadas
+        RequestBonitaController::executeActivity($idTask);
+
+        return redirect()->route('home');
     }
 }

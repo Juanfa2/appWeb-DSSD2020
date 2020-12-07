@@ -20,8 +20,8 @@
                             @foreach ($proyects as $proyect)
                             <tr>
                                 <td>{{ $proyect['nombre'] }}</td>
-                                <td>{{ $proyect['fecha_inicio'] }}</td>
-                                <td>{{ $proyect['fecha_fin'] }}</td>
+                                <td></td>
+                                <td></td>
                                 <td>{{ (\App\User::where('id', $proyect['id_responsable'])->pluck('name'))[0] }}</td>
                             </tr>
                             @endforeach

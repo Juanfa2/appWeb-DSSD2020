@@ -49,7 +49,10 @@
                                     <th>Ejecución</th>
                                     <th>Proyecto</th>
                                     <th>Estado</th>
+                                    
                                     <th>Ejecutar</th>
+                                    <th>Puntaje</th>
+                                    <th>Informe</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,14 +61,21 @@
                                     <tr>
                                         <td>{{ $protocol['nombre'] }}</td>
                                         <td>{{ $protocol['orden'] }}</td>
-                                        <td>@if ($protocol['es_local']) Local @else Remoto @endif</td>
-                                        <td>{{ (\App\Proyect::where('id', $protocol['id_proyecto'])->pluck('nombre'))[0] }}</td>
+                                        <td>@if ($protocol['es_local']=="True") Local @else Remoto @endif</td>
+                                        <td>{{ (\App\Proyect::where('id_proyecto', $protocol['id_proyecto'])->pluck('nombre'))[0] }}</td>
+
                                         @if( $protocol['fecha_lanzamiento'] != null )
+
                                             @if( $protocol['puntaje'] == null )
                                                 <td>En ejecución...</td>
+
                                             @else
-                                                <td>Ya fue ejecutado</td>
+                                                <td>Ya fue ejecutado
+                                                    
+                                                </td>
+    
                                             @endif
+
                                             <td>
                                                 <a class="btn btn-success disabled" href="{{url('/protocol/exec/'.$protocol['id_protocolo'])}}">Ejecutar
                                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-play-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -83,6 +93,24 @@
                                                 </a>
                                             </td>
                                         @endif
+                                       
+                                        @if( $protocol['puntaje'] == null )
+                                            <td>Sin puntaje</td>
+
+                                        @else
+                                            <td> <small>Con puntaje {{$protocol['puntaje']}}</small></td>
+
+                                        @endif
+
+                                        @if( $protocol['puntaje'] == null )
+                                            <td>Esperando puntaje para informe</td>
+
+                                        @else
+                                            <td> <a class="btn btn-success" href="{{url('/protocol/informe/'.$protocol['id_protocolo'])}}">Realizar informe</a></td>
+
+                                        @endif
+
+
                                     </tr>
                                     @endif
                                 @endforeach
