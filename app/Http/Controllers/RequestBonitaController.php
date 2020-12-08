@@ -83,7 +83,7 @@ class RequestBonitaController extends Controller
 
     }
 
-    public static function setCaseVariable($caseId, $variable, $data){
+    public static function setCaseVariable($caseId, $variable, $data, $tipoData){
 
     	/*
         #############################################################
@@ -100,7 +100,7 @@ class RequestBonitaController extends Controller
                 ],   
                 'json'=> [
                     [
-                        'type' => 'java.lang.Integer',
+                        'type' => 'java.lang.'.$tipoData,
                         'value'=> $data
                     ]
                                      

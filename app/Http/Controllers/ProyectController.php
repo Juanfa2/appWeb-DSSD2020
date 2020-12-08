@@ -87,6 +87,17 @@ class ProyectController extends Controller
             ]);
         }
 
+        for ($i=0; $i < $cant ; $i++) { 
+            Protocol::create([
+                'nombre' => $request["nombre"][$i],
+                'id_responsable' => $request["responsable"][$i],
+                'orden' => $request["orden"][$i],
+                'es_local'=> $request["ejecucion"][$i],
+                'id_proyecto' => $id->id_proyecto, 
+                'fecha_lanzamiento' => Input::get('fecha_inicio')
+            ]);
+        }
+
         #Busca la siguiente actividad a ejecutar, y me quedo con el id
         $response =  RequestBonitaController::getIdNextActivityByCase($caseId);
         $idTask =  $response['data'][0]->id;

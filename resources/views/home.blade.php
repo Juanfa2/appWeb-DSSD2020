@@ -15,7 +15,8 @@
                     @endif
                     @if(Auth::user()->rol == "Responsable")
                         <p>Responsable de protocolo</p>
-                            <a href="{{url('viewProtocols')}}" class="btn btn-success">Seguimiento de proyectos</a>
+                            <a href="{{url('viewProtocols')}}" class="btn btn-success">Ver protocolos para ejecutar</a>
+                            <a href="{{url('viewProtocolsExecute')}}" class="btn btn-success">Ver protocolos ya ejecutados</a>
                     @endif
                 </div>
             </div>

@@ -59,7 +59,7 @@
                                 @foreach ($protocols as $protocol)
                                     @if(Auth::user()->id == $protocol['id_responsable'])
                                     <tr>
-                                        <td><a href="{{url('/protocol/detail/'.$protocol['id_protocolo'])}}">{{ $protocol['nombre'] }}</a></td>
+                                        <td>{{ $protocol['nombre'] }}</td>
                                         <td>{{ $protocol['orden'] }}</td>
                                         <td>@if ($protocol['es_local']=="True") Local @else Remoto @endif</td>
                                         <td>{{ (\App\Proyect::where('id_proyecto', $protocol['id_proyecto'])->pluck('nombre'))[0] }}</td>

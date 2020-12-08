@@ -32,20 +32,36 @@ Route::get('create', function(){
 	return view('createProyect', ['responsables' => $responsables]);
 })->middleware('jefe');
 
+
+
+
 Route::get('viewProtocols', function(){
-    $protocols = ProtocolController::getProtocols();
+	$protocols = Protocol::where('informe', 0)->where('exec_error', 0)->orderBy('orden', 'ASC')->get();
+	//dd($protocols);
+    //$protocols = ProtocolController::getProtocols();
     return view('viewProtocols',  ['protocols' => $protocols]);
 })->name('viewProtocols')->middleware('responsable');
 
+
+
+
 Route::get('followProyects', function(){
-   	$proyects = ProtocolController::getProtocols();
-	return view('followProyect',  ['proyects' => $proyects]);
+
+	$protocols = Protocol::all();
+	$proyects = Proyect::all();
+   	//$proyects = ProtocolController::getProtocols();
+
+	return view('followProyect', compact('protocols','proyects') );
 })->middleware('jefe');
+
+
 
 Route::get('errorsNotice', function(){
    	$protocols = ProtocolController::getDisapproved();
 	return view('errorsNotice',  ['protocols' => $protocols]);
 })->name('errorsNotice')->middleware('jefe');
+
+
 
 Auth::routes();
 
@@ -54,10 +70,30 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/proyect/store', 'ProyectController@store')->name('proyect.store')->middleware('jefe');
 Route::get('/protocol/exec/{id}', 'ProtocolController@exec_protocol')->name('protocol.exec_protocol')->middleware('responsable');
 
+
+
+#Ante falla de algun protocolo
 Route::get('/protocol/re-exec/{id}', 'ProtocolController@re_exec_protocol')->name('protocol.re_exec_protocol')->middleware('jefe');
 
 Route::get('/protocol/delete/{id}', 'ProtocolController@delete_protocol')->name('protocol.delete_protocol')->middleware('jefe');
 
 Route::get('/protocol/continue/{id}', 'ProtocolController@continue_exec_protocol')->name('protocol.continue_exec_protocol')->middleware('jefe');
 
+
+
+
+
 Route::get('/protocol/informe/{id}' ,'ProtocolController@informe');
+Route::post('/protocol/informe' ,'ProtocolController@uploadInforme');
+
+Route::get('/protocol/execute/{id}', 'ProtocolController@execute');
+Route::post('/protocol/execute', 'ProtocolController@updateProtocol');
+
+
+Route::get('viewProtocolsExecute', function(){
+	$protocols = Protocol::where('informe', 1)->get();
+    //$protocols = ProtocolController::getProtocols();
+    return view('viewProtocols',  ['protocols' => $protocols]);
+})->name('viewProtocolsExecute')->middleware('responsable');
+
+Route::get('/protocol/detail/{id}', 'ProtocolController@detail');
