@@ -36,9 +36,22 @@ Route::get('create', function(){
 
 
 Route::get('viewProtocols', function(){
-	$protocols = Protocol::where('informe', 0)->where('exec_error', 0)->orderBy('orden', 'ASC')->get();
+	//$protocols = Protocol::where('informe', 0)->where('exec_error', 0)->orderBy('orden', 'ASC')->first();
 	//dd($protocols);
     //$protocols = ProtocolController::getProtocols();
+    $proyectos = Proyect::join('protocolos', 'proyectos.id_proyecto', '=', 'protocolos.id_proyecto')->where('protocolos.id_responsable',Auth::user()->id)->select('proyectos.id_proyecto')->distinct()->get();
+    //dd(count($proyectos));
+    $protocols = [];
+    for ($i=0; $i < count($proyectos) ; $i++) { 
+    	$protocolos = Protocol::where('informe', 0)->where('exec_error', 0)->where('id_proyecto', $proyectos[$i]->id_proyecto)->orderBy('orden', 'ASC')->first();
+
+    	array_push($protocols,$protocolos);
+    }
+
+
+    //dd($protocolos);
+	//$protocols = Protocol::where('id_responsable', Auth::user()->id)->distinct('id_proyecto')->get();
+
     return view('viewProtocols',  ['protocols' => $protocols]);
 })->name('viewProtocols')->middleware('responsable');
 
