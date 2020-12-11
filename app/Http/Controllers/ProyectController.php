@@ -46,10 +46,6 @@ class ProyectController extends Controller
                 'name' => 'fecha_fin',
                 'value'=> Input::get('fecha_fin')
             ],
-            [
-                'name' => 'local',
-                'value'=> 'true'
-            ],
         ];
 
         #Instancio un nuevo caso del proceso con las variables definidas. 
@@ -74,7 +70,7 @@ class ProyectController extends Controller
 
         $endpoint = "http://127.0.0.1:8001/api/services/protocol/add";
         $client = new \GuzzleHttp\Client();
-        
+        /*
         for ($i=0; $i < $cant ; $i++) { 
             $response = $client->request('POST', $endpoint, [
                 'form_params' => [
@@ -86,9 +82,10 @@ class ProyectController extends Controller
                 ]
             ]);
         }
-
-        for ($i=0; $i < $cant ; $i++) { 
-            Protocol::create([
+        */
+        for ($i=0;
+         $i < $cant ; $i++) { 
+            $port = Protocol::create([
                 'nombre' => $request["nombre"][$i],
                 'id_responsable' => $request["responsable"][$i],
                 'orden' => $request["orden"][$i],
@@ -96,7 +93,49 @@ class ProyectController extends Controller
                 'id_proyecto' => $id->id_proyecto, 
                 'fecha_lanzamiento' => Input::get('fecha_inicio')
             ]);
+            $idapp= $port->id_protocolo;
+            $response = $client->request('POST', $endpoint, [
+                'form_params' => [
+                    'nombre' => $request["nombre"][$i],
+                    'id_responsable' => $request["responsable"][$i],
+                    'orden' => $request["orden"][$i],
+                    'es_local'=> $request["ejecucion"][$i],
+                    'id_proyecto' => $id->id_proyecto,
+                    'id_app'=> $idapp 
+                ]
+            ]);
         }
+
+        $protocolo = Protocol::where('informe', 0)->where('exec_error', 0)->where('id_proyecto', $id->id_proyecto)->orderBy('orden', 'ASC')->first();
+
+        if ($protocolo->es_local == 1) {
+            $variable = "tipo";
+            $data = "remoto";
+            $tipoData = "String";
+
+        }else{
+            $variable = "tipo";
+            $data = "local";
+            $tipoData = "String";
+        }
+
+        #Seteo si la variable local es true
+        RequestBonitaController::setCaseVariable($caseId, $variable, $data, $tipoData);
+
+        $var1= "id_protocolo";
+        $data1 = $protocolo->id_protocolo;
+        $tipoData1 = "Integer";
+
+        #Seteo el id del protocolo
+        RequestBonitaController::setCaseVariable($caseId, $var1, $data1, $tipoData1);
+
+
+        $nombre= "nombre_protocolo";
+        $datoNombre = $protocolo->nombre;
+        $tipoDato = "String";
+
+        #Seteo nombre del protocolo
+        RequestBonitaController::setCaseVariable($caseId, $nombre, $datoNombre, $tipoDato);
 
         #Busca la siguiente actividad a ejecutar, y me quedo con el id
         $response =  RequestBonitaController::getIdNextActivityByCase($caseId);

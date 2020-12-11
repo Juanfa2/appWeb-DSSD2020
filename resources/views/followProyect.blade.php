@@ -9,11 +9,11 @@
                 <div class="card-body">
                     @foreach ($proyects as $proyect)
                         @if($proyect->id_responsable == Auth::id())
-                            <p>Proyecto: {{$proyect->nombre}}</p>
+                            <h2>Proyecto: {{$proyect->nombre}}</h2>
                             @if($proyect->exitoso == 0)
-                                <p>Proyecto sin problemas</p>
+                                <strong>Proyecto sin problemas</strong>
                             @else
-                                <p>Proyecto cancelado</p>    
+                                <strong>Proyecto cancelado</strong>    
                             @endif
                             <p>Protocolos</p>
                             <table class="table table-sm">
@@ -22,6 +22,7 @@
                                         <th>Nombre</th>
                                         <th>Fecha de inicio</th>
                                         <th>Fecha de fin</th>
+                                        <th>Puntaje</th>
                                         <th>Responsable</th>
                                     </tr>
                                 </thead>
@@ -31,7 +32,8 @@
                                     <tr>
                                         <td><a href="{{url('/protocol/detail/'.$protocol['id_protocolo'])}}">{{ $protocol->nombre }}</a></td>
                                         <td>{{ $protocol->fecha_lanzamiento}}</td>
-                                        <td>{{ ($protocol->fecha_terminacion != null)? $protocol->fecha_terminacion : " "}}</td>
+                                        <td>{{ ($protocol->fecha_terminacion != null)? $protocol->fecha_terminacion : "No terminado "}}</td>
+                                        <td>{{ ($protocol->puntaje != null)? $protocol->puntaje : "Sin puntaje "}}</td>
                                         <td>{{ (\App\User::where('id', $protocol['id_responsable'])->pluck('name'))[0] }}</td>
                                     </tr>
                                     @endif

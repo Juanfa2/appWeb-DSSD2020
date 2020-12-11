@@ -7,6 +7,7 @@
             <div class="card">
                 <div class="card-header" style="background-color: #5bc0de;">Formulario del protocolo </div>
                 <div class="card-body">
+                    
                     <h3 class="h3-create-proyect">Ejecucion de protocolo local</h3>
                     {{ Form::open(array('url' => '/protocol/execute')) }}
                         <fieldset>
@@ -14,7 +15,7 @@
                             <div class="form-group row">
                                 {{ Form::Label('puntaje', 'Puntaje del protocolo', ['class' => 'col-lg-4 col-form-label']) }}
                                 <div class="col-lg-8">
-                                    {{ Form::number('puntaje', null, ['class' => 'form-control', 'min'=>"1", 'max'=>"10"]) }}
+                                    {{ Form::number('puntaje', (isset($puntaje))? $puntaje : null, ['class' => 'form-control', 'min'=>"1", 'max'=>"10"]) }}
                                 </div>
                             </div>
 

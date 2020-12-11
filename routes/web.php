@@ -39,7 +39,7 @@ Route::get('viewProtocols', function(){
 	//$protocols = Protocol::where('informe', 0)->where('exec_error', 0)->orderBy('orden', 'ASC')->first();
 	//dd($protocols);
     //$protocols = ProtocolController::getProtocols();
-    $proyectos = Proyect::join('protocolos', 'proyectos.id_proyecto', '=', 'protocolos.id_proyecto')->where('protocolos.id_responsable',Auth::user()->id)->select('proyectos.id_proyecto')->distinct()->get();
+    $proyectos = Proyect::join('protocolos', 'proyectos.id_proyecto', '=', 'protocolos.id_proyecto')->where('protocolos.id_responsable',Auth::user()->id)->where('exitoso', 0)->select('proyectos.id_proyecto')->distinct()->get();
     //dd(count($proyectos));
     $protocols = [];
     for ($i=0; $i < count($proyectos) ; $i++) { 

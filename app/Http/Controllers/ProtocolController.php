@@ -21,7 +21,7 @@ class ProtocolController extends Controller
     }
 
     public function exec_protocol($id){
-        
+        /*
         #Busco el proceso por el nombre
         $responseBonita = RequestBonitaController::getActivityByName("Ejecutar protocolo");
         $idTask= $responseBonita['data'][0]->id;
@@ -45,8 +45,11 @@ class ProtocolController extends Controller
 
         $content = json_decode($response->getBody(), true);
 
-        return redirect()->route('viewProtocols', ['info' => $content['Info'], 'estado' => $content['Estado']]);
+        return view('protocolRemoto' ,['info' => $content['Info'], 'estado' => $content['Estado']]);
+        //return view('protocolRemoto' ,compact('content'));
+        */
     }
+
 
     public function re_exec_protocol($id){
     	$protocolo = Protocol::where('id_protocolo',$id)->first();
@@ -79,12 +82,18 @@ class ProtocolController extends Controller
             #Ejecuto la actividad, queda guardad en tareas realizadas
             RequestBonitaController::executeActivity($idTask);
 
-            
+            $endpoint = "http://127.0.0.1:8001/api/services/protocol/refresh/".$id;
+            $client = new \GuzzleHttp\Client();
+
+            $response = $client->request('GET', $endpoint);
 
             $protocolo->exec_error = 0;
             $protocolo->puntaje=null;
             $protocolo->fecha_terminacion=null;
             $protocolo->save();
+
+            
+
         }
 
 
@@ -103,7 +112,7 @@ class ProtocolController extends Controller
         $protocolo = Protocol::where('id_protocolo',$id)->first();
         $proyecto = Proyect::where('id_proyecto', $protocolo->id_proyecto)->first();
         $idCase = $proyecto->id_case;
-
+        
         //dd($protocolo);
 
         $variable = "terminar";
@@ -130,7 +139,8 @@ class ProtocolController extends Controller
             #Ejecuto la actividad, queda guardad en tareas realizadas
             RequestBonitaController::executeActivity($idTask);
 
-            
+            $protocolo->exec_error = 0;
+            $protocolo->save();
 
             $proyecto->exitoso = 1;
             $proyecto->save();
@@ -243,9 +253,11 @@ class ProtocolController extends Controller
             $variable = "cant_protocolo";
             $data = count($protocolos) - 1; 
             $tipoData="Integer";
+
+
             $Response = RequestBonitaController::setCaseVariable($idCase, $variable, $data, $tipoData);
 
-
+            
             #Busco el usuario por lastname, "en este caso viene predefinido con bates", y me quedo con el id
             $response = RequestBonitaController::getIdUserByLastname();
             $idUser = $response['data'][0]->id;
@@ -253,13 +265,57 @@ class ProtocolController extends Controller
             #A la actividad le asigno un usuario. 
             RequestBonitaController::assignActivityToUser($idTask, $idUser);
 
-            #Ejecuto la actividad, queda guardad en tareas realizadas
-            RequestBonitaController::executeActivity($idTask);
+            
 
 
             $protocolo->comentario = $request['comentario'];
             $protocolo->informe = 1; 
             $protocolo->save();
+
+            #Busco el siguiente protocoo a ejecutar
+            $protocolo = Protocol::where('informe', 0)->where('exec_error', 0)->where('id_proyecto', $proyecto->id_proyecto)->orderBy('orden', 'ASC')->first();
+            if ($protocolo != null) {
+                
+            //dd($protocolo);
+
+                if ($protocolo->es_local == 1) {
+                    $variable1 = "tipo";
+                    $data1 = "remoto";
+                    $tipoData1 = "String";
+                    RequestBonitaController::setCaseVariable($idCase, $variable1, $data1, $tipoData1);
+
+                }else{
+                    $variable1 = "tipo";
+                    $data1 = "null";
+                    $tipoDat1 = "String";
+                    RequestBonitaController::setCaseVariable($idCase, $variable1, $data1, $tipoDat1);
+                }
+
+                #Seteo si el local o no 
+
+                #Obtengo el id del proximo protocolo
+                $var1= "id_protocolo";
+                $data1 = $protocolo->id_protocolo;
+                $tipoData1 = "Integer";
+
+                #seteo id_protocolo en bonita
+                RequestBonitaController::setCaseVariable($idCase, $var1, $data1, $tipoData1);
+
+                $nombre= "nombre_protocolo";
+                $datoNombre = $protocolo->nombre;
+                $tipoDato = "String";
+                RequestBonitaController::setCaseVariable($idCase, $nombre, $datoNombre, $tipoDato);
+
+                $nombre= "info";
+                $datoNombre = "null";
+                $tipoDato = "String";
+                RequestBonitaController::setCaseVariable($idCase, $nombre, $datoNombre, $tipoDato);
+
+
+
+            }
+        #Ejecuto la actividad, queda guardad en tareas realizadas
+        RequestBonitaController::executeActivity($idTask);       
         }
 
         return redirect()->route('home');
@@ -268,8 +324,28 @@ class ProtocolController extends Controller
     public static function execute($id){
 
         $protocolo = Protocol::where('id_protocolo', $id)->first();
+        if($protocolo->es_local == 1){
 
-        return view('formProtocol', compact('protocolo'));
+            $endpoint = "http://127.0.0.1:8001/api/services/run/".$id;
+            $client = new \GuzzleHttp\Client();
+
+            $response = $client->request('GET', $endpoint);
+
+            $endpoint = "http://127.0.0.1:8001/api/services/status/".$id;
+            $client = new \GuzzleHttp\Client();
+
+            $response = $client->request('GET', $endpoint);
+
+            $content = json_decode($response->getBody(), true);
+
+            $puntaje = $content['Puntaje'];
+            return view('formProtocol', compact('protocolo', 'puntaje'));
+
+        }else{
+            return view('formProtocol', compact('protocolo'));
+        }
+
+        
     }
 
     public static function updateProtocol(Request $request){

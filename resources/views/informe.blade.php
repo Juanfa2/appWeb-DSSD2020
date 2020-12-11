@@ -8,6 +8,7 @@
                 <div class="card-header" style="background-color: #5bc0de;">Informe del protocolo para el proyecto {{$proyecto->nombre}}</div>
                 <div class="card-body">
                     <h4> Nombre del protocolo: {{$protocolo->nombre}} </h4>
+                    <h5> Puntaje del protocolo: {{$protocolo->puntaje}} </h5>
                     {{ Form::open(array('url' => '/protocol/informe')) }}
                         <fieldset>
                             <!--Comentario-->

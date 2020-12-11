@@ -11,6 +11,7 @@
                         <table class="table table-sm">
                             <thead>
                                 <tr>
+                                    <th>Proyecto</th>
                                     <th>Nombre</th>                                
                                     <th>Responsable</th>
                                     <th>Error</th>
@@ -20,13 +21,14 @@
                             <tbody>
                                 @foreach ($protocols as $protocol)
                                 <tr>
+                                    <td>{{(\App\Proyect::where('id_proyecto', $protocol['id_proyecto'])->pluck('nombre'))[0]}}</td>
                                     <td>{{ $protocol['nombre'] }}</td>
                                     <td>
                                         {{ (\App\User::where('id', $protocol['id_responsable'])->pluck('name'))[0] }}
                                     </td>
                                     <td>
                                         @if($protocol['exec_error'])
-                                            <P>{{ $protocol['exec_error'] }}<p>
+                                            <P>El puntaje es menor a 7<p>
                                         @else
                                             <P>"Comunicarse con el responsable"<p>
                                         @endif
